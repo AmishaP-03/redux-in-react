@@ -2,8 +2,6 @@ import { useDispatch, useSelector } from 'react-redux'; // custom hooks provided
 import classes from './Counter.module.css';
 
 const Counter = () => {
-  const toggleCounterHandler = () => {};
-
   /**
    * Function called by react-redux. Current state value is passed to it and we make it return the counter value from the state.
    * 
@@ -13,6 +11,8 @@ const Counter = () => {
    * When this component is unmounted from the DOM, react-redux will automatically clear this subscription for us
    */
   const counter = useSelector(state => state.counter);
+
+  const showCounter = useSelector(state => state.showCounter);
 
   /**
    * Function which will dispatch our action to the redux store
@@ -31,16 +31,20 @@ const Counter = () => {
     dispatchFunction({type: "DECREMENT"});
   }
 
+  function handleToggle() {
+    dispatchFunction({type: "TOGGLE"});
+  }
+
   return (
     <main className={classes.counter}>
-      <h1>Redux Counter</h1>
-      <div className={classes.value}>{counter}</div>
-      <div>
+      {showCounter && <h1>Redux Counter</h1>}
+      {showCounter && <div className={classes.value}>{counter}</div>}
+      {showCounter && <div>
         <button onClick={handleIncrement}>Increment</button>
         <button onClick={handleIncrementByFive}>Increment by 5</button>
         <button onClick={handleDecrement}>Decrement</button>
-      </div>
-      <button onClick={toggleCounterHandler}>Toggle Counter</button>
+      </div>}
+      <button onClick={handleToggle}>Toggle Counter</button>
     </main>
   );
 };
