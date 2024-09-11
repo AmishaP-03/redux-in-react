@@ -1,4 +1,4 @@
-import { useSelector } from 'react-redux'; // custom hook provided by react-redux
+import { useDispatch, useSelector } from 'react-redux'; // custom hooks provided by react-redux
 import classes from './Counter.module.css';
 
 const Counter = () => {
@@ -14,10 +14,27 @@ const Counter = () => {
    */
   const counter = useSelector(state => state.counter);
 
+  /**
+   * Function which will dispatch our action to the redux store
+   */
+  const dispatchFunction = useDispatch();
+
+  function handleIncrement() {
+    dispatchFunction({type: "INCREMENT"});
+  }
+
+  function handleDecrement() {
+    dispatchFunction({type: "DECREMENT"});
+  }
+
   return (
     <main className={classes.counter}>
       <h1>Redux Counter</h1>
       <div className={classes.value}>{counter}</div>
+      <div>
+        <button onClick={handleIncrement}>Increment</button>
+        <button onClick={handleDecrement}>Decrement</button>
+      </div>
       <button onClick={toggleCounterHandler}>Toggle Counter</button>
     </main>
   );
